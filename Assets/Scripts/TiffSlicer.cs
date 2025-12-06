@@ -6,8 +6,6 @@ public class TiffSlicer : MonoBehaviour
 
     public void LoadTiffFile(string filePath)
     {
-        // This is now a placeholder if you only load from remote. 
-        // You might need a proper implementation if you need to load local files.
         Debug.LogWarning("LoadTiffFile is not implemented for local files with the new TiffReader. Use LoadTiffFromData instead.");
     }
 
@@ -70,7 +68,6 @@ public class TiffSlicer : MonoBehaviour
 
         slice.SetPixels(slicePixels);
         slice.Apply();
-        // Important: Destroy the Texture2D object after use to free up memory
         byte[] pngData = slice.EncodeToPNG();
         Destroy(slice);
         return pngData;
@@ -97,7 +94,6 @@ public class TiffSlicer : MonoBehaviour
 
         slice.SetPixels(slicePixels);
         slice.Apply();
-        // Important: Destroy the Texture2D object after use to free up memory
         byte[] pngData = slice.EncodeToPNG();
         Destroy(slice);
         return pngData;

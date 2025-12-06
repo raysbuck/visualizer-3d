@@ -23,6 +23,7 @@ public class RemoteTiffLoader : MonoBehaviour
 
         UnityWebRequest www = UnityWebRequest.Get(tiffUrl);
         www.certificateHandler = new AcceptAllCertificatesHandler();
+        www.SetRequestHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
         
         yield return www.SendWebRequest();
 
@@ -36,21 +37,20 @@ public class RemoteTiffLoader : MonoBehaviour
             
             byte[] tiffData = www.downloadHandler.data;
 
-            tiffSlicer.LoadTiffFromData(tiffData);
-
-            byte[] pngDataXZ = tiffSlicer.GetSlice("xz", 128);
+            byte[] pngDataXZ = tiffData;
             if (pngDataXZ != null)
             {
-                System.IO.File.WriteAllBytes("remote_slice_xz_128.png", pngDataXZ);
+                System.IO.File.WriteAllBytes("remote_slice.png", pngDataXZ);
                 Debug.Log("Saved remote XZ slice to remote_slice_xz_128.png");
             }
-
-            byte[] pngDataYZ = tiffSlicer.GetSlice("yz", 64);
+            /*
+            byte[] pngDataYZ = tiffData;//.GetSlice("yz", 64);
             if (pngDataYZ != null)
             {
                 System.IO.File.WriteAllBytes("remote_slice_yz_64.png", pngDataYZ);
                 Debug.Log("Saved remote YZ slice to remote_slice_yz_64.png");
             }
+            */
         }
     }
 }
